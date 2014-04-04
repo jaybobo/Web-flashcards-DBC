@@ -3,7 +3,7 @@
 ## Wireframes 
 Both pdf and png files.
 
-[Wireframes](https://www.dropbox.com/sh/b9b2zo6klsy80ad/4h2sZE7VfM)
+[Dropbox link](https://www.dropbox.com/sh/b9b2zo6klsy80ad/4h2sZE7VfM)
 
 ## Schema
 
