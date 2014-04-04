@@ -1,9 +1,22 @@
-.container {
-  margin: 20px auto;
-  width: 600px;
-  padding: 0px 20px 20px 20px;
-  border: 1px dotted black;
+/*nav*/
+
+
+
+/*landing page*/
+.jumbotron {
+  margin-top: 50px;
+  text-align: center;
 }
 th {
   text-align: left;
+}
+
+/*login*/
+
+.create-new {
+  width: 30%;
+}
+
+.login {
+  width: 30%;
 }
