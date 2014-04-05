@@ -20,3 +20,25 @@ th {
 .login {
   width: 30%;
 }
+
+/*Game view*/
+
+.counter {
+  float:left;
+  font-size: 25px;
+  font-family:sans-serif;
+}
+
+.answer-track {
+  float:right;
+  font-size: 20px;
+  font-family: sans-serif;
+}
+
+.answer input {
+  height: 40px;
+}
+
+.final-score {
+  color: red;
+}

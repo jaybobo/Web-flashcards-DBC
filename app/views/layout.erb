@@ -7,7 +7,7 @@
     See: http://necolas.github.com/normalize.css/
   -->
   <link rel="stylesheet" href="/css/normalize.css">
-  <link href="css/bootstrap.css" rel="stylesheet">
+  <link href="/css/bootstrap.css" rel="stylesheet">
   <!--
     application.css is where you put your styles
   -->
@@ -19,9 +19,9 @@
   <title></title>
 </head>
 <body>
-  <%= erb :'partials/_navbar' %>
+  <%= erb :'/partials/_navbar' %>
 
   <%= yield %>
-  <script src="js/bootstrap.min.js"></script>
+  <script src="/js/bootstrap.min.js"></script>
 </body>
 </html>
