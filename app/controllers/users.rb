@@ -1,11 +1,16 @@
 enable :sessions
 
 get '/users' do
-  erb :"users/index"
+  @user = User.find_by(id: session[:value])
+  if @user
+    erb :"users/index"
+  else
+    redirect to('/')
+  end
 end
 
 get '/users/' do
-  erb :"users/index"
+  redirect to ('/users')
 end
 
 get '/users/new' do
@@ -30,12 +35,13 @@ post '/users/login' do
 
   if @user && @user.authenticate(params[:password])
     session[:value] = @user.id
-    erb :"/users/index"
+    redirect to("/users")
   else
     erb :"users/login"
   end
 end
 
+# for new users
 post '/users' do
   @user = User.new(params[:user])
   if @user.save
