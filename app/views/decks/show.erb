@@ -1,15 +1,34 @@
 <div class="container">
-  <div class="counter">Question 1</div>
-  <div class="answer-track">0/10</div>
-  <div class="jumbotron">
-    <h2>What is the capital of Missouri?</h2>
+<!-- New game view -->
+  <% if @new_round  %>
+    <div class="jumbotron">
+      <h2><%= @deck.name %></h2>
 
-    <form class="answer">
-      <input type="text" size="35" placeholder="Type Answer Here">
-      <br>
-      <br>
-      <button type="button" class="btn btn-primary btn-lg">Enter!</button>
-    </form>
+      <form class="answer" action='/decks/<%= @deck.id %>/new_game' method="post">
+       <button type="submit" class="btn btn-primary btn-lg">Start Game!</button>
+      </form>
+    </div>
 
-  </div>
+<!-- Game-playing view -->
+  <% else %>
+    <div class="counter">Question <%= @card_count + 1%></div>
+    <div class="answer-track">0/10</div>
+    <div class="jumbotron">
+      <h3><%= @card.question %></h3>
+
+      <form class="answer" action='/decks/<%= @deck.id %>/next' method="post">
+        <input type="text" name='user_guess' size="35" placeholder="Type Answer Here">
+        <input type="hidden" name='card_counter' value="<%= @card_count += 1 %>">
+        <br>
+        <br>
+        <button type="submit" class="btn btn-primary btn-lg">Submit Answer</button>
+      </form>
+    </div>
+
+
+  <% end %>
+
+
+
+
 </div>
