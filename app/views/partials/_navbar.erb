@@ -11,8 +11,12 @@
         <li class="active"><a href="#">About</a></li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
-        <li><a href="/users/logout">Log Out</a></li>
-        <li><a href="/users/login">Log In</a></li>
+        <% if session[:value] %>
+          <li><a href="/users/logout">Log Out</a></li>
+        <% else %>
+          <li><a href="/users/login">Log In</a></li>
+        <% end %>
+
       </ul>
     </div><!-- /.navbar-collapse -->
   </div><!-- /.container-fluid -->
