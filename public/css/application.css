@@ -35,3 +35,10 @@ th {
   font-family: sans-serif;
 }
 
+.answer input {
+  height: 40px;
+}
+
+.final-score {
+  color: red;
+}

@@ -1,5 +1,5 @@
 get '/decks' do
-  erb :"decks/show"
+  erb :"/decks/show"
 end
 
 get '/decks/gameover' do
