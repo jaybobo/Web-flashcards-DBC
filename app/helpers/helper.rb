@@ -1,3 +1,10 @@
+def nil_answer
+  @round.update_attributes(
+    cards_played: @round.cards_played + 1
+    )
+end
+
+
 def correct_answer
   @guess = Guess.create(
     round_id: @round.id,
@@ -10,7 +17,6 @@ def correct_answer
     cards_correct: @round.cards_correct + 1
     )
 end
-
 
 
 def wrong_answer
