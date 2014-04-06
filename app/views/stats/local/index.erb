@@ -1,0 +1,43 @@
+<div class="container">
+  <div class="row top">
+    <div class="col-md-8">
+      <h2><%= @user.user_name %>'s Statistics Dashboard
+        <small>Personal Game Stats</small></h2>
+    </div>
+
+    <div class="col-md-4">
+      <h2></h2>
+    </div>
+  </div>
+
+  <div class="row">
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <td><strong>Date</strong></td>
+          <td><strong>Game</strong></td>
+          <td><strong>Round</strong></td>
+          <td><strong>Correct Answers</strong></td>
+          <td><strong>Wrong Guesses</strong></td>
+          <td><strong>Total Answered</strong></td>
+        </tr>
+      </thead>
+
+      <tbody class="table-striped table-hover">
+        <% @user.rounds.each do |round| %>
+        <% round_number = 1 %>
+        <tr>
+          <td><%= get_round_date(round) %></td>
+          <td><%= deck_name(round) %></td>
+          <td><%= round_number %></td>
+          <td><%= round.cards_correct %></td>
+          <td><%= wrong_guesses(round) %></td>
+          <td><%= round.cards_played %></td>
+        </tr>
+        <% round_number += 1 %>
+        <% end %>
+      </tbody>
+
+    </table>
+  </div>
+</div>

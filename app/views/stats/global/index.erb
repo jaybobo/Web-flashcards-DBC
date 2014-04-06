@@ -1,0 +1,44 @@
+<div class="container">
+  <div class="row top">
+    <div class="col-md-8">
+      <h2><%= @user.user_name %>'s Stats Dashboard
+      <small>Global Player Stats</small>
+      </h2>
+
+    </div>
+
+    <div class="col-md-4">
+    </div>
+  </div>
+
+  <div class="row">
+    <% User.all.each do |user| %>
+
+    <table class="table">
+      <thead>
+        <tr>
+          <td><strong>Player</strong></td>
+          <td><strong>Game</strong></td>
+          <td><strong>Total Correct</strong></td>
+          <td><strong>Total Incorrect</strong></td>
+          <td><strong>Total Answered</strong></td>
+        </tr>
+      </thead>
+
+      <tbody class="table-striped table-hover">
+
+        <% user_round = Round.where(user_id: user.id) %>
+          <tr>
+            <td><%= user.user_name %></td>
+            <td><%= deck_name(user_round.first) %></td>
+            <td><%= get_total_cards_correct(user_round) %></td>
+            <td><%= get_total_cards_wrong(user_round) %></td>
+            <td><%= get_total_cards_played(user_round) %></td>
+          </tr>
+
+      </tbody>
+
+    </table>
+    <% end %>
+  </div>
+</div>
