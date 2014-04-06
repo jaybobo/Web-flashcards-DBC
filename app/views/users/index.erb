@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container center">
   <div class="row top">
     <div class="col-md-4">
       <h2>Hello, <%= @user.user_name %></h2>
@@ -12,17 +12,15 @@
       #
     </div>
   </div>
-  <div class="container">
+  <div class="container center card-view">
     <div class="row">
-      <div class="col-md-6 .col-md-offset-3">
-      <h2>Games, click to play</h2>
-      </div>
+      <h2>Click on a deck to play!</h2>
     </div>  
     <% Deck.all.each do |deck| %>
     <div class="row">
-      <div class="col-md-6 .col-md-offset-3">
-        <a href="/decks/<%= deck.id %>"><h4 class="game-list"><%= deck.name %></h4></a>
-      </div>
+      
+        <a href="/decks/<%= deck.id %>"><h3 class="game-list"><%= deck.name %></h3></a>
+    
     </div>    
     <% end %>
   </div>

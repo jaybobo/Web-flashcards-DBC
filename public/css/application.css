@@ -19,6 +19,11 @@ th {
 
 .game-list {
   margin-top: 20px;
+  text-decoration: underline;
+}
+
+.card-view {
+  margin-top: 80px;
 }
 
 /*login*/
@@ -31,6 +36,9 @@ th {
   width: 30%;
 }
 
+.center {
+  text-align: center;
+}
 /*Game view*/
 
 .jumbotron .card {
