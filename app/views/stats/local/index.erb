@@ -1,5 +1,10 @@
 <div class="container">
   <div class="row top">
+
+    <div class="chart">
+
+    </div>
+
     <div class="col-md-8">
       <h2><%= @user.user_name %>'s Statistics Dashboard
         <small>Personal Game Stats</small></h2>
@@ -24,17 +29,15 @@
       </thead>
 
       <tbody class="table-striped table-hover">
-        <% @user.rounds.each do |round| %>
-        <% round_number = 1 %>
+        <% local_rounds_collection(@user.rounds).each do |round| %> 
         <tr>
-          <td><%= get_round_date(round) %></td>
-          <td><%= deck_name(round) %></td>
-          <td><%= round_number %></td>
-          <td><%= round.cards_correct %></td>
-          <td><%= wrong_guesses(round) %></td>
-          <td><%= round.cards_played %></td>
+          <td><%= round[0] %></td>
+          <td><%= round[1] %></td>
+          <td><%= round[2] %></td>
+          <td><%= round[3] %></td>
+          <td><%= round[4] %></td>
+          <td><%= round[5] %></td>
         </tr>
-        <% round_number += 1 %>
         <% end %>
       </tbody>
 
