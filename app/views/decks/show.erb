@@ -23,6 +23,8 @@
     <h2>Game Over!! Your score is: </h2>
     <p class="final-score"><b>Correct: <%= @round.cards_correct %> Incorrect: <%= @round.cards_played - @round.cards_correct - 1%></b></p>
     <br>
+      <%= erb :'/partials/_results_table' %>
+    <br>
       <a href="/decks/<%= @deck.id %>"><button type="button" class="btn btn-primary btn-lg">Play again?</button></a>
       <a href="/users"><button type="button" class="btn btn-primary btn-lg">Return to dashboard</button></a>
   </div>
