@@ -1,5 +1,6 @@
 get '/' do
   if session[:value]
+    @user = User.find(session[:value])
     erb :"users/index"
   else
     erb :index
