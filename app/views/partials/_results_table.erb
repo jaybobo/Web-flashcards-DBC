@@ -5,10 +5,18 @@
     <th>Correct answer</th>
   </tr>
   <% @round.guesses.each do |guess| %>
-    <tr>
-      <td><%= guess.card.question %></td>
-      <td><%= guess.card.answer %></td>
-      <td><%= guess.user_guess %></td>
-    </tr>
+    <% if guess.correctness == "f" %>
+      <tr class="danger">
+        <td><%= guess.card.question %></td>
+        <td><%= guess.card.answer %></td>
+        <td><%= guess.user_guess %></td>
+      </tr>
+    <% else %>
+      <tr>
+        <td><%= guess.card.question %></td>
+        <td><%= guess.card.answer %></td>
+        <td><%= guess.user_guess %></td>
+      </tr>
+    <% end %>
   <% end %>
 </table>
