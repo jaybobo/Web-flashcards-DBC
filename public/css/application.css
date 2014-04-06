@@ -33,6 +33,10 @@ th {
 
 /*Game view*/
 
+.jumbotron .card {
+  border-radius:  0px;
+}
+
 .counter {
   float:left;
   font-size: 25px;

@@ -5,7 +5,7 @@
 <!-- Game-playing view -->
   <div class="counter">Question <%= @round.cards_played %></div>
   <div class="answer-track">Correct: <%= @round.cards_correct %> Incorrect: <%= @round.cards_played - @round.cards_correct - 1%> Question left: <%= @deck.cards.length - @round.cards_played %> </div>
-  <div class="jumbotron">
+  <div class="jumbotron card">
     <h3><%= @card.question %></h3>
 
     <form class="answer" action='/decks/<%= @deck.id %>/next' method="post">

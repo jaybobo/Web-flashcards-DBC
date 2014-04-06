@@ -12,10 +12,18 @@
       #
     </div>
   </div>
-  <div class="row">
-    <h3>Games, click to play</h3>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6 .col-md-offset-3">
+      <h2>Games, click to play</h2>
+      </div>
+    </div>  
     <% Deck.all.each do |deck| %>
-      <a href="/decks/<%= deck.id %>"><h4 class="game-list"><%= deck.name %></h4></a>
+    <div class="row">
+      <div class="col-md-6 .col-md-offset-3">
+        <a href="/decks/<%= deck.id %>"><h4 class="game-list"><%= deck.name %></h4></a>
+      </div>
+    </div>    
     <% end %>
   </div>
 </div>
