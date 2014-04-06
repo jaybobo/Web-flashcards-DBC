@@ -1,19 +1,23 @@
 get '/decks/:id' do
   #add auth
-  @deck = Deck.find(params[:id])
-  @new_round = true
-  erb :"/decks/new_game"
+  # @user = User.find_by(id: session[:value])
+  # if @user
+  #   @deck = Deck.find(params[:id])
+  #   @new_round = true
+  #   erb :"/decks/new_game"
+  # else
+  #   redirect to('/')
+  # end
+
+  if session[:value]
+    @deck = Deck.find(params[:id])
+    @new_round = true
+    erb :"/decks/new_game"
+  else
+    redirect to ('/')
+  end
 end
 
-# post '/decks/:id/new_game' do
-#   @deck = Deck.find(params[:id])
-#   @round = Round.create(user_id: session[:value], deck_id: @deck.id)
-#   @card = @deck.cards[@round.cards_played]
-#   # @round.update_attributes(cards_played: @round.cards_played + 1)
-#   p "This is new_game, here is @card.question: #{@card.question}"
-#   p "This is new_game, here is @round.cards_played: #{@round.cards_played}"
-#   erb :"/decks/show"
-# end
 
 post '/decks/:id/next' do
   @deck = Deck.find(params[:id])
@@ -36,12 +40,12 @@ post '/decks/:id/next' do
     nil_answer
   elsif @user_guess == @deck.cards[@round.cards_played - 1].answer
     correct_answer
-    if @card.id == @deck.cards.last.id
+    if @card.nil?
       erb :'/decks/gameover'
     end
   else
     wrong_answer
-    if @card.id == @deck.cards.last.id
+    if @card.nil?
       erb :'/decks/gameover'
     end
   end

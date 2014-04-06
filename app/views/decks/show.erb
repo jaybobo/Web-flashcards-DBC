@@ -1,8 +1,10 @@
 <div class="container">
 
+<% unless @card.nil? %>
+
 <!-- Game-playing view -->
   <div class="counter">Question <%= @round.cards_played %></div>
-  <div class="answer-track">0/10</div>
+  <div class="answer-track">Correct: <%= @round.cards_correct %> Incorrect: <%= @round.cards_played - @round.cards_correct - 1%> Question left: <%= @deck.cards.length - @round.cards_played %> </div>
   <div class="jumbotron">
     <h3><%= @card.question %></h3>
 
@@ -14,6 +16,18 @@
       <button type="submit" class="btn btn-primary btn-lg">Submit Answer</button>
     </form>
   </div>
+
+<% else %>
+<!-- Game over view -->
+  <div class="jumbotron">
+    <h2>Game Over!! Your score is: </h2>
+    <p class="final-score"><b>Correct: <%= @round.cards_correct %> Incorrect: <%= @round.cards_played - @round.cards_correct - 1%></b></p>
+    <br>
+      <a href="/decks/<%= @deck.id %>"><button type="button" class="btn btn-primary btn-lg">Play again?</button></a>
+      <a href="/users"><button type="button" class="btn btn-primary btn-lg">Return to dashboard</button></a>
+  </div>
+
+<% end %>
 
 </div>
 
