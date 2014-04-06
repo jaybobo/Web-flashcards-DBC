@@ -41,6 +41,10 @@ th {
 }
 /*Game view*/
 
+.topic {
+  color: #5cb85c;
+}
+
 .jumbotron .card {
   border-radius:  0px;
 }
