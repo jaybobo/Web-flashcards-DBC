@@ -11,6 +11,16 @@ th {
   text-align: left;
 }
 
+/*User dashboard*/
+
+.top {
+  border-bottom: solid gray;
+}
+
+.game-list {
+  margin-top: 20px;
+}
+
 /*login*/
 
 .create-new {
