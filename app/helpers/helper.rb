@@ -8,7 +8,7 @@ end
 def correct_answer
   @guess = Guess.create(
     round_id: @round.id,
-    card_id: @card.id,
+    card_id: @deck.cards[@round.cards_played - 1].id,
     user_guess: @user_guess,
     correctness: true
     )
@@ -22,7 +22,7 @@ end
 def wrong_answer
   @guess = Guess.create(
     round_id: @round.id,
-    card_id: @card.id,
+    card_id: @deck.cards[@round.cards_played - 1].id,
     user_guess: @user_guess,
     correctness: false
     )

@@ -1,5 +1,5 @@
 <div class="container">
-  <div class="row">
+  <div class="row top">
     <div class="col-md-4">
       <h2>Hello, <%= @user.user_name %></h2>
     </div>
@@ -11,5 +11,11 @@
       <h2>Global Stats</h2>
       #
     </div>
+  </div>
+  <div class="row">
+    <h3>Games, click to play</h3>
+    <% Deck.all.each do |deck| %>
+      <a href="/decks/<%= deck.id %>"><h4 class="game-list"><%= deck.name %></h4></a>
+    <% end %>
   </div>
 </div>

@@ -1,0 +1,14 @@
+<table class="table table-hover">
+  <tr>
+    <th>Question</th>
+    <th>Your answer</th>
+    <th>Correct answer</th>
+  </tr>
+  <% @round.guesses.each do |guess| %>
+    <tr>
+      <td><%= guess.card.question %></td>
+      <td><%= guess.card.answer %></td>
+      <td><%= guess.user_guess %></td>
+    </tr>
+  <% end %>
+</table>

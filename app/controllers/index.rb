@@ -1,6 +1,10 @@
 get '/' do
-  # Look in app/views/index.erb
-  erb :index
+  @user = User.find_by(id: session[:value])
+  if @user
+    erb :"users/index"
+  else
+    redirect to('/')
+  end
 end
 
 get '/new' do
