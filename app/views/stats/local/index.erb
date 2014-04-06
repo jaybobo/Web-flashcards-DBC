@@ -1,0 +1,46 @@
+<div class="container">
+  <div class="row top">
+
+    <div class="chart">
+
+    </div>
+
+    <div class="col-md-8">
+      <h2><%= @user.user_name %>'s Statistics Dashboard
+        <small>Personal Game Stats</small></h2>
+    </div>
+
+    <div class="col-md-4">
+      <h2></h2>
+    </div>
+  </div>
+
+  <div class="row">
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <td><strong>Date</strong></td>
+          <td><strong>Game</strong></td>
+          <td><strong>Round</strong></td>
+          <td><strong>Correct Answers</strong></td>
+          <td><strong>Wrong Guesses</strong></td>
+          <td><strong>Total Answered</strong></td>
+        </tr>
+      </thead>
+
+      <tbody class="table-striped table-hover">
+        <% local_rounds_collection(@user.rounds).each do |round| %> 
+        <tr>
+          <td><%= round[0] %></td>
+          <td><%= round[1] %></td>
+          <td><%= round[2] %></td>
+          <td><%= round[3] %></td>
+          <td><%= round[4] %></td>
+          <td><%= round[5] %></td>
+        </tr>
+        <% end %>
+      </tbody>
+
+    </table>
+  </div>
+</div>

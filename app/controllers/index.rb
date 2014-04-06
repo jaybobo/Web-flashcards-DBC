@@ -1,6 +1,7 @@
 get '/' do
   if session[:value]
-    @user = User.find(session[:value])
+    # added line 4, view couldn't find user
+    @user = User.find_by(id: session[:value])
     erb :"users/index"
   else
     erb :index
