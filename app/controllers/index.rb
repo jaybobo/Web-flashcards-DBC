@@ -1,9 +1,8 @@
 get '/' do
-  @user = User.find_by(id: session[:value])
-  if @user
+  if session[:value]
     erb :"users/index"
   else
-    redirect to('/')
+    erb :index
   end
 end
 
