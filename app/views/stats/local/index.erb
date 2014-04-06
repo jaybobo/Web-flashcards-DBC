@@ -15,37 +15,27 @@
       <thead>
         <tr>
           <td><strong>Date</strong></td>
+          <td><strong>Game</strong></td>
           <td><strong>Round</strong></td>
           <td><strong>Correct Answers</strong></td>
           <td><strong>Wrong Guesses</strong></td>
-          <td><strong>Total Answers</strong></td>
+          <td><strong>Total Answered</strong></td>
         </tr>
       </thead>
 
       <tbody class="table-striped table-hover">
+        <% @user.rounds.each do |round| %>
+        <% round_number = 1 %>
         <tr>
-          <td>1/10/2014</td>
-          <td>1</td>
-          <td>7</td>
-          <td>5</td>
-          <td>30</td>
+          <td><%= get_round_date(round) %></td>
+          <td><%= deck_name(round) %></td>
+          <td><%= round_number %></td>
+          <td><%= round.cards_correct %></td>
+          <td><%= wrong_guesses(round) %></td>
+          <td><%= round.cards_played %></td>
         </tr>
-
-        <tr>
-          <td>1/14/2014</td>
-          <td>2</td>
-          <td>20</td>
-          <td>5</td>
-          <td>30</td>
-        </tr>
-
-        <tr>
-          <td>2/1/2014</td>
-          <td>3</td>
-          <td>17</td>
-          <td>5</td>
-          <td>30</td>
-        </tr>
+        <% round_number += 1 %>
+        <% end %>
       </tbody>
 
     </table>
