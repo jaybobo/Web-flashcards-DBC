@@ -1,35 +1,19 @@
 <div class="container">
-<!-- New game view -->
-  <% if @new_round  %>
-    <div class="jumbotron">
-      <h2><%= @deck.name %></h2>
-
-      <form class="answer" action='/decks/<%= @deck.id %>/new_game' method="post">
-        <input type="hidden" name="new_game" value="">
-       <button type="submit" class="btn btn-primary btn-lg">Start Game!</button>
-      </form>
-    </div>
 
 <!-- Game-playing view -->
-  <% else %>
-    <div class="counter">Question <%= @round.cards_played %></div>
-    <div class="answer-track">0/10</div>
-    <div class="jumbotron">
-      <h3><%= @card.question %></h3>
+  <div class="counter">Question <%= @round.cards_played %></div>
+  <div class="answer-track">0/10</div>
+  <div class="jumbotron">
+    <h3><%= @card.question %></h3>
 
-      <form class="answer" action='/decks/<%= @deck.id %>/next' method="post">
-        <input type="text" name='user_guess' size="35" placeholder="Type Answer Here">
-        <input type="hidden" name="new_game" value="false">
-        <br>
-        <br>
-        <button type="submit" class="btn btn-primary btn-lg">Submit Answer</button>
-      </form>
-    </div>
-
-
-  <% end %>
-
-
-
+    <form class="answer" action='/decks/<%= @deck.id %>/next' method="post">
+      <input type="text" name='user_guess' size="35" placeholder="Type Answer Here">
+      <input type="hidden" name="new_game" value="false">
+      <br>
+      <br>
+      <button type="submit" class="btn btn-primary btn-lg">Submit Answer</button>
+    </form>
+  </div>
 
 </div>
+

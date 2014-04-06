@@ -1,0 +1,10 @@
+<div class="container">
+  <div class="jumbotron">
+    <h2><%= @deck.name %></h2>
+
+    <form class="answer" action='/decks/<%= @deck.id %>/next' method="post">
+      <input type="hidden" name="first_question" value="yes">
+     <button type="submit" class="btn btn-primary btn-lg">Start Game!</button>
+    </form>
+  </div>
+</div>
