@@ -1,0 +1,830 @@
+--
+-- PostgreSQL database dump
+--
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SET check_function_bodies = false;
+SET client_min_messages = warning;
+
+--
+-- Name: plpgsql; Type: EXTENSION; Schema: -; Owner: 
+--
+
+CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
+
+
+--
+-- Name: EXTENSION plpgsql; Type: COMMENT; Schema: -; Owner: 
+--
+
+COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
+
+
+SET search_path = public, pg_catalog;
+
+SET default_tablespace = '';
+
+SET default_with_oids = false;
+
+--
+-- Name: cards; Type: TABLE; Schema: public; Owner: apprentice; Tablespace: 
+--
+
+CREATE TABLE cards (
+    id integer NOT NULL,
+    deck_id integer,
+    question character varying(255),
+    answer character varying(255)
+);
+
+
+ALTER TABLE public.cards OWNER TO apprentice;
+
+--
+-- Name: cards_id_seq; Type: SEQUENCE; Schema: public; Owner: apprentice
+--
+
+CREATE SEQUENCE cards_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.cards_id_seq OWNER TO apprentice;
+
+--
+-- Name: cards_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: apprentice
+--
+
+ALTER SEQUENCE cards_id_seq OWNED BY cards.id;
+
+
+--
+-- Name: decks; Type: TABLE; Schema: public; Owner: apprentice; Tablespace: 
+--
+
+CREATE TABLE decks (
+    id integer NOT NULL,
+    name character varying(255),
+    created_at timestamp without time zone,
+    updated_at timestamp without time zone
+);
+
+
+ALTER TABLE public.decks OWNER TO apprentice;
+
+--
+-- Name: decks_id_seq; Type: SEQUENCE; Schema: public; Owner: apprentice
+--
+
+CREATE SEQUENCE decks_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.decks_id_seq OWNER TO apprentice;
+
+--
+-- Name: decks_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: apprentice
+--
+
+ALTER SEQUENCE decks_id_seq OWNED BY decks.id;
+
+
+--
+-- Name: guesses; Type: TABLE; Schema: public; Owner: apprentice; Tablespace: 
+--
+
+CREATE TABLE guesses (
+    id integer NOT NULL,
+    round_id integer,
+    card_id integer,
+    user_guess character varying(255),
+    correctness character varying(255),
+    created_at timestamp without time zone,
+    updated_at timestamp without time zone
+);
+
+
+ALTER TABLE public.guesses OWNER TO apprentice;
+
+--
+-- Name: guesses_id_seq; Type: SEQUENCE; Schema: public; Owner: apprentice
+--
+
+CREATE SEQUENCE guesses_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.guesses_id_seq OWNER TO apprentice;
+
+--
+-- Name: guesses_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: apprentice
+--
+
+ALTER SEQUENCE guesses_id_seq OWNED BY guesses.id;
+
+
+--
+-- Name: rounds; Type: TABLE; Schema: public; Owner: apprentice; Tablespace: 
+--
+
+CREATE TABLE rounds (
+    id integer NOT NULL,
+    user_id integer,
+    deck_id integer,
+    cards_played integer DEFAULT 0,
+    cards_correct integer DEFAULT 0,
+    created_at timestamp without time zone,
+    updated_at timestamp without time zone
+);
+
+
+ALTER TABLE public.rounds OWNER TO apprentice;
+
+--
+-- Name: rounds_id_seq; Type: SEQUENCE; Schema: public; Owner: apprentice
+--
+
+CREATE SEQUENCE rounds_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.rounds_id_seq OWNER TO apprentice;
+
+--
+-- Name: rounds_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: apprentice
+--
+
+ALTER SEQUENCE rounds_id_seq OWNED BY rounds.id;
+
+
+--
+-- Name: schema_migrations; Type: TABLE; Schema: public; Owner: apprentice; Tablespace: 
+--
+
+CREATE TABLE schema_migrations (
+    version character varying(255) NOT NULL
+);
+
+
+ALTER TABLE public.schema_migrations OWNER TO apprentice;
+
+--
+-- Name: users; Type: TABLE; Schema: public; Owner: apprentice; Tablespace: 
+--
+
+CREATE TABLE users (
+    id integer NOT NULL,
+    user_name character varying(255),
+    user_email character varying(255),
+    password_digest character varying(255),
+    total_cards_played integer,
+    total_cards_correct integer
+);
+
+
+ALTER TABLE public.users OWNER TO apprentice;
+
+--
+-- Name: users_id_seq; Type: SEQUENCE; Schema: public; Owner: apprentice
+--
+
+CREATE SEQUENCE users_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.users_id_seq OWNER TO apprentice;
+
+--
+-- Name: users_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: apprentice
+--
+
+ALTER SEQUENCE users_id_seq OWNED BY users.id;
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: apprentice
+--
+
+ALTER TABLE ONLY cards ALTER COLUMN id SET DEFAULT nextval('cards_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: apprentice
+--
+
+ALTER TABLE ONLY decks ALTER COLUMN id SET DEFAULT nextval('decks_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: apprentice
+--
+
+ALTER TABLE ONLY guesses ALTER COLUMN id SET DEFAULT nextval('guesses_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: apprentice
+--
+
+ALTER TABLE ONLY rounds ALTER COLUMN id SET DEFAULT nextval('rounds_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: apprentice
+--
+
+ALTER TABLE ONLY users ALTER COLUMN id SET DEFAULT nextval('users_id_seq'::regclass);
+
+
+--
+-- Data for Name: cards; Type: TABLE DATA; Schema: public; Owner: apprentice
+--
+
+COPY cards (id, deck_id, question, answer) FROM stdin;
+1	1	Alabama	Montgomery
+2	1	Alaska	Juneau
+3	1	Arizona	Phoenix
+4	1	Arkansas	Little Rock
+5	1	California	Sacramento
+6	1	Colorado	Denver
+7	1	Connecticut	Hartford
+8	1	Delaware	Dover
+9	1	Florida	Tallahassee
+10	1	Georgia	Atlanta
+11	1	Hawaii	Honolulu
+12	1	Idaho	Boise
+13	1	Illinois	Springfield
+14	1	Indiana	Indianapolis
+15	1	Iowa	Des Moines
+16	1	Kansas	Topeka
+17	1	Kentucky	Frankfort
+18	1	Louisiana	Baton Rouge
+19	1	Maine	Augusta
+20	1	Maryland	Annapolis
+21	1	Massachusetts	Boston
+22	1	Michigan	Lansing
+23	1	Minnesota	Saint Paul
+24	1	Mississippi	Jackson
+25	1	Missouri	Jefferson City
+26	1	Montana	Helena
+27	1	Nebraska	Lincoln
+28	1	Nevada	Carson City
+29	1	New Hampshire	Concord
+30	1	New Jersey	Trenton
+31	1	New Mexico	Santa Fe
+32	1	New York	Albany
+33	1	North Carolina	Raleigh
+34	1	North Dakota	Bismarck
+35	1	Ohio	Columbus
+36	1	Oklahoma	Oklahoma City
+37	1	Oregon	Salem
+38	1	Pennsylvania	Harrisburg
+39	1	Rhode Island	Providence
+40	1	South Carolina	Columbia
+41	1	South Dakota	Pierre
+42	1	Tennessee	Nashville
+43	1	Texas	Austin
+44	1	Utah	Salt Lake City
+45	1	Vermont	Montpelier
+46	1	Virginia	Richmond
+47	1	Washington	Olympia
+48	1	West Virginia	Charleston
+49	1	Wisconsin	Madison
+50	1	Wyoming	Cheyenne
+\.
+
+
+--
+-- Name: cards_id_seq; Type: SEQUENCE SET; Schema: public; Owner: apprentice
+--
+
+SELECT pg_catalog.setval('cards_id_seq', 50, true);
+
+
+--
+-- Data for Name: decks; Type: TABLE DATA; Schema: public; Owner: apprentice
+--
+
+COPY decks (id, name, created_at, updated_at) FROM stdin;
+1	State Capitals	\N	\N
+\.
+
+
+--
+-- Name: decks_id_seq; Type: SEQUENCE SET; Schema: public; Owner: apprentice
+--
+
+SELECT pg_catalog.setval('decks_id_seq', 1, true);
+
+
+--
+-- Data for Name: guesses; Type: TABLE DATA; Schema: public; Owner: apprentice
+--
+
+COPY guesses (id, round_id, card_id, user_guess, correctness, created_at, updated_at) FROM stdin;
+1	1	1	Mobile	f	\N	\N
+2	1	2	Anchorage	f	\N	\N
+3	1	3	Phoenix	t	\N	\N
+4	1	4	Little Rock	t	\N	\N
+5	1	5	Sacramento	t	\N	\N
+6	1	6	Denver	t	\N	\N
+7	1	7	Hartford	t	\N	\N
+8	1	8	Dover	t	\N	\N
+9	1	9	Tallahassee	t	\N	\N
+10	1	10	Atlanta	t	\N	\N
+11	1	11	Honolulu	t	\N	\N
+12	1	12	Boise	t	\N	\N
+13	1	13	Springfield	t	\N	\N
+14	1	14	Indianapolis	t	\N	\N
+15	1	15	Des Moines	t	\N	\N
+16	1	16	Kansas City	f	\N	\N
+17	1	17	Frankfort	t	\N	\N
+18	1	18	Baton Rouge	t	\N	\N
+19	1	19	Augusta	t	\N	\N
+20	1	20	Annapolis	t	\N	\N
+21	1	21	Boston	t	\N	\N
+22	1	22	Lansing	t	\N	\N
+23	1	23	Saint Paul	t	\N	\N
+24	1	24	Jackson	t	\N	\N
+25	1	25	Jefferson City	t	\N	\N
+26	1	26	Billings	f	\N	\N
+27	1	27	Lincoln	t	\N	\N
+28	1	28	Carson City	t	\N	\N
+29	1	29	Concord	t	\N	\N
+30	1	30	Trenton	t	\N	\N
+31	1	31	Santa Fe	t	\N	\N
+32	1	32	Albany	t	\N	\N
+33	1	33	Raleigh	t	\N	\N
+34	1	34	Bismarck	t	\N	\N
+35	1	35	Columbus	t	\N	\N
+36	1	36	Oklahoma City	t	\N	\N
+37	1	37	Salem	t	\N	\N
+38	1	38	Harrisburg	t	\N	\N
+39	1	39	Providence	t	\N	\N
+40	1	40	Columbia	t	\N	\N
+41	1	41	Pierre	t	\N	\N
+42	1	42	Nashville	t	\N	\N
+43	1	43	Dallas	f	\N	\N
+44	1	44	Salt Lake City	t	\N	\N
+45	1	45	Montpelier	t	\N	\N
+46	1	46	Richmond	t	\N	\N
+47	1	47	Olympia	t	\N	\N
+48	1	48	Charleston	t	\N	\N
+49	1	49	Madison	t	\N	\N
+50	1	50	Cheyenne	t	\N	\N
+51	2	1	sdfas	f	\N	\N
+52	2	2	adf	f	\N	\N
+53	2	3	adf	f	\N	\N
+54	2	4	adf	f	\N	\N
+55	2	5	Sacramento	t	\N	\N
+56	2	6	Denver	t	\N	\N
+57	2	7	Hartford	t	\N	\N
+58	2	8	Madison	f	\N	\N
+59	2	9	Tallahassee	t	\N	\N
+60	2	10	Atlanta	t	\N	\N
+61	2	11	Honolulu	t	\N	\N
+62	2	12	Boise	t	\N	\N
+63	2	13	Springfield	t	\N	\N
+64	2	14	Indianapolis	t	\N	\N
+65	2	15	Des Moines	t	\N	\N
+66	2	16	Kansas City	f	\N	\N
+67	2	17	Frankfort	t	\N	\N
+68	2	18	Baton Rouge	t	\N	\N
+69	2	19	Dover	f	\N	\N
+70	2	20	Annapolis	t	\N	\N
+71	2	21	Boston	t	\N	\N
+72	2	22	Lansing	t	\N	\N
+73	2	23	Saint Paul	t	\N	\N
+74	2	24	Jackson	t	\N	\N
+75	2	25	Jefferson City	t	\N	\N
+76	2	26	Billings	f	\N	\N
+77	2	27	Lincoln	t	\N	\N
+78	2	28	Carson City	t	\N	\N
+79	2	29	Concord	t	\N	\N
+80	2	30	Trenton	t	\N	\N
+81	2	31	Santa Fe	t	\N	\N
+82	2	32	Albany	t	\N	\N
+83	2	33	Raleigh	t	\N	\N
+84	2	34	Bismarck	t	\N	\N
+85	2	35	Columbus	t	\N	\N
+86	2	36	Oklahoma City	t	\N	\N
+87	2	37	Salem]	f	\N	\N
+88	2	38	Harrisburg	t	\N	\N
+89	2	39	Providence	t	\N	\N
+90	2	40	Charleston	f	\N	\N
+91	2	41	Pierre	t	\N	\N
+92	2	42	Nashville	t	\N	\N
+93	2	43	Austin	t	\N	\N
+94	2	44	Salt Lake City	t	\N	\N
+95	2	45	Montpelier	t	\N	\N
+96	2	46	Richmond	t	\N	\N
+97	2	47	Olympia	t	\N	\N
+98	2	48	Charleston	t	\N	\N
+99	2	49	Madison	t	\N	\N
+100	2	50	Cheyenne	t	\N	\N
+101	3	1	Mobile	f	2014-04-06 22:18:10.644209	2014-04-06 22:18:10.644209
+102	3	2	Anchorage	f	2014-04-06 22:18:19.302595	2014-04-06 22:18:19.302595
+103	3	3	Phoenix	t	2014-04-06 22:18:28.323414	2014-04-06 22:18:28.323414
+104	5	1	Mobile	f	2014-04-07 02:51:18.720015	2014-04-07 02:51:18.720015
+105	5	2	Anchorage	f	2014-04-07 02:51:23.094262	2014-04-07 02:51:23.094262
+106	5	3	Phoenix	t	2014-04-07 02:51:29.000642	2014-04-07 02:51:29.000642
+107	5	4	Little Rock	t	2014-04-07 02:52:09.69785	2014-04-07 02:52:09.69785
+108	5	5	Sacramento	t	2014-04-07 02:52:15.252403	2014-04-07 02:52:15.252403
+109	5	6	Denver	t	2014-04-07 02:52:19.733588	2014-04-07 02:52:19.733588
+110	5	7	Hartford	t	2014-04-07 02:52:23.540094	2014-04-07 02:52:23.540094
+111	5	8	Dover	t	2014-04-07 02:52:27.34457	2014-04-07 02:52:27.34457
+112	5	9	Tallahassee	t	2014-04-07 02:52:32.345079	2014-04-07 02:52:32.345079
+113	5	10	Atlanta	t	2014-04-07 02:52:36.24884	2014-04-07 02:52:36.24884
+114	5	11	Honolulu	t	2014-04-07 02:52:45.836242	2014-04-07 02:52:45.836242
+115	5	12	Boise	t	2014-04-07 02:52:52.379575	2014-04-07 02:52:52.379575
+116	5	13	Springfield	t	2014-04-07 02:52:57.830952	2014-04-07 02:52:57.830952
+117	5	14	Indianapolis	t	2014-04-07 02:53:03.397041	2014-04-07 02:53:03.397041
+118	5	15	Des Moines	t	2014-04-07 02:53:08.40005	2014-04-07 02:53:08.40005
+119	5	16	Topeka	t	2014-04-07 02:53:12.53468	2014-04-07 02:53:12.53468
+120	5	17	Frankfort	t	2014-04-07 02:53:16.005608	2014-04-07 02:53:16.005608
+121	5	18	Baton Rouge	t	2014-04-07 02:53:20.209792	2014-04-07 02:53:20.209792
+122	5	19	Augusta	t	2014-04-07 02:53:24.23711	2014-04-07 02:53:24.23711
+123	5	20	Annapolis	t	2014-04-07 02:53:28.252702	2014-04-07 02:53:28.252702
+124	5	21	Boston	t	2014-04-07 02:53:36.15302	2014-04-07 02:53:36.15302
+125	5	22	Lansing	t	2014-04-07 02:53:39.233997	2014-04-07 02:53:39.233997
+126	5	23	Saint Paul	t	2014-04-07 02:53:43.559268	2014-04-07 02:53:43.559268
+127	5	24	Jackson	t	2014-04-07 02:53:47.852749	2014-04-07 02:53:47.852749
+128	5	25	Jefferson City	t	2014-04-07 02:53:55.599456	2014-04-07 02:53:55.599456
+129	5	26	Billings	f	2014-04-07 02:53:59.421598	2014-04-07 02:53:59.421598
+130	5	27	Lincoln	t	2014-04-07 02:54:04.561715	2014-04-07 02:54:04.561715
+131	5	28	Carson City	t	2014-04-07 02:54:09.824054	2014-04-07 02:54:09.824054
+132	5	29	Concord	t	2014-04-07 02:54:15.87576	2014-04-07 02:54:15.87576
+133	5	30	Trenton	t	2014-04-07 02:54:19.371542	2014-04-07 02:54:19.371542
+134	5	31	Santa Fe	t	2014-04-07 02:54:23.238529	2014-04-07 02:54:23.238529
+135	5	32	Albany	t	2014-04-07 02:54:28.334367	2014-04-07 02:54:28.334367
+136	5	33	Raleigh	t	2014-04-07 02:54:32.907691	2014-04-07 02:54:32.907691
+137	5	34	Bismarck	t	2014-04-07 02:54:41.206451	2014-04-07 02:54:41.206451
+138	5	35	Columbus	t	2014-04-07 02:54:45.653513	2014-04-07 02:54:45.653513
+139	5	36	Oklahoma City	t	2014-04-07 02:54:55.053514	2014-04-07 02:54:55.053514
+140	5	37	Salem	t	2014-04-07 02:54:59.653236	2014-04-07 02:54:59.653236
+141	5	38	Harrisburg	t	2014-04-07 02:55:05.21038	2014-04-07 02:55:05.21038
+142	5	39	Providence	t	2014-04-07 02:55:09.800745	2014-04-07 02:55:09.800745
+143	5	40	Columbia	t	2014-04-07 02:55:14.462185	2014-04-07 02:55:14.462185
+144	5	41	Pierre	t	2014-04-07 02:55:18.028387	2014-04-07 02:55:18.028387
+145	5	42	Nashville	t	2014-04-07 02:55:22.526427	2014-04-07 02:55:22.526427
+146	5	43	Austin	t	2014-04-07 02:55:25.872565	2014-04-07 02:55:25.872565
+147	5	44	Salt Lake City	t	2014-04-07 02:55:35.413858	2014-04-07 02:55:35.413858
+148	5	45	Montpelier	t	2014-04-07 02:55:40.378982	2014-04-07 02:55:40.378982
+149	5	46	Richmond	t	2014-04-07 02:55:44.21112	2014-04-07 02:55:44.21112
+150	5	47	Richmond	f	2014-04-07 02:55:44.785153	2014-04-07 02:55:44.785153
+151	5	48	Charleston	t	2014-04-07 02:55:48.603151	2014-04-07 02:55:48.603151
+152	5	49	Madison	t	2014-04-07 02:55:55.49385	2014-04-07 02:55:55.49385
+153	5	50	Cheyenne	t	2014-04-07 02:56:01.370752	2014-04-07 02:56:01.370752
+154	7	1	Montgomery	t	2014-04-07 03:30:30.450768	2014-04-07 03:30:30.450768
+155	7	2	Anchorage	f	2014-04-07 03:30:33.7867	2014-04-07 03:30:33.7867
+156	7	3	Phoenix	t	2014-04-07 03:30:36.864005	2014-04-07 03:30:36.864005
+157	7	4	Little Rock	t	2014-04-07 03:30:44.660421	2014-04-07 03:30:44.660421
+158	7	5	Sacramento	t	2014-04-07 03:30:48.517918	2014-04-07 03:30:48.517918
+159	7	6	Denver	t	2014-04-07 03:30:51.544569	2014-04-07 03:30:51.544569
+160	7	7	Hartford	t	2014-04-07 03:30:55.483774	2014-04-07 03:30:55.483774
+161	7	8	Dover	t	2014-04-07 03:31:00.206216	2014-04-07 03:31:00.206216
+162	7	9	Tallahassee	t	2014-04-07 03:31:04.918335	2014-04-07 03:31:04.918335
+163	7	10	Atlanta	t	2014-04-07 03:31:11.901814	2014-04-07 03:31:11.901814
+164	7	11	Honolulu	t	2014-04-07 03:31:15.475782	2014-04-07 03:31:15.475782
+165	7	12	Boise	t	2014-04-07 03:31:18.999761	2014-04-07 03:31:18.999761
+166	7	13	Springfield	t	2014-04-07 03:31:28.559773	2014-04-07 03:31:28.559773
+167	7	14	Indianapolis	t	2014-04-07 03:31:33.283776	2014-04-07 03:31:33.283776
+168	7	15	Des Moines	t	2014-04-07 03:31:38.075297	2014-04-07 03:31:38.075297
+169	7	16	Topeka	t	2014-04-07 03:31:43.230894	2014-04-07 03:31:43.230894
+170	7	17	Frankfort	t	2014-04-07 03:31:48.731748	2014-04-07 03:31:48.731748
+171	7	18	Baton Rouge	t	2014-04-07 03:31:52.972874	2014-04-07 03:31:52.972874
+172	7	19	Augusta	t	2014-04-07 03:31:56.573469	2014-04-07 03:31:56.573469
+173	7	20	Annapolis	t	2014-04-07 03:32:00.207413	2014-04-07 03:32:00.207413
+174	7	21	Boston	t	2014-04-07 03:32:04.168333	2014-04-07 03:32:04.168333
+175	7	22	Lansing	t	2014-04-07 03:32:07.322338	2014-04-07 03:32:07.322338
+176	7	23	Saint Paul	t	2014-04-07 03:32:22.481279	2014-04-07 03:32:22.481279
+177	7	24	Jackson	t	2014-04-07 03:32:26.979476	2014-04-07 03:32:26.979476
+178	7	25	Jeff	f	2014-04-07 03:32:30.379181	2014-04-07 03:32:30.379181
+179	7	26	Helena	t	2014-04-07 03:32:35.305262	2014-04-07 03:32:35.305262
+180	7	27	Lincoln	t	2014-04-07 03:32:40.414694	2014-04-07 03:32:40.414694
+181	7	28	Carson City	t	2014-04-07 03:32:45.520386	2014-04-07 03:32:45.520386
+182	7	29	Concord	t	2014-04-07 03:32:49.09326	2014-04-07 03:32:49.09326
+183	7	30	Trenton	t	2014-04-07 03:32:53.074915	2014-04-07 03:32:53.074915
+184	7	31	Santa Fe	t	2014-04-07 03:32:57.369523	2014-04-07 03:32:57.369523
+185	7	32	Albany	t	2014-04-07 03:33:02.511305	2014-04-07 03:33:02.511305
+186	7	33	Raleigh	t	2014-04-07 03:33:07.703802	2014-04-07 03:33:07.703802
+187	7	34	Bismarck	t	2014-04-07 03:33:12.636781	2014-04-07 03:33:12.636781
+188	7	35	Columbus	t	2014-04-07 03:33:20.772906	2014-04-07 03:33:20.772906
+189	7	36	ad	f	2014-04-07 03:33:22.948062	2014-04-07 03:33:22.948062
+190	7	37	adf	f	2014-04-07 03:33:24.370714	2014-04-07 03:33:24.370714
+191	7	38	adf	f	2014-04-07 03:33:25.944951	2014-04-07 03:33:25.944951
+192	7	39	adf	f	2014-04-07 03:33:27.613272	2014-04-07 03:33:27.613272
+193	7	40	adf	f	2014-04-07 03:33:29.278829	2014-04-07 03:33:29.278829
+194	7	41	adf	f	2014-04-07 03:33:30.862367	2014-04-07 03:33:30.862367
+195	7	42	adf	f	2014-04-07 03:33:32.49514	2014-04-07 03:33:32.49514
+196	7	43	adf	f	2014-04-07 03:33:33.984011	2014-04-07 03:33:33.984011
+197	7	44	Salt Lake City	t	2014-04-07 03:33:39.219343	2014-04-07 03:33:39.219343
+198	7	45	adfa	f	2014-04-07 03:33:41.044287	2014-04-07 03:33:41.044287
+199	7	46	Richmond	t	2014-04-07 03:33:49.559277	2014-04-07 03:33:49.559277
+200	7	47	Olympia	t	2014-04-07 03:33:54.346477	2014-04-07 03:33:54.346477
+201	7	48	Charleston	t	2014-04-07 03:33:58.703976	2014-04-07 03:33:58.703976
+202	7	49	Madison	t	2014-04-07 03:34:07.721314	2014-04-07 03:34:07.721314
+203	7	50	Cheyenne	t	2014-04-07 03:34:10.775843	2014-04-07 03:34:10.775843
+204	8	1	Montgomery	t	2014-04-07 03:40:35.327187	2014-04-07 03:40:35.327187
+205	8	2	Anchorage	f	2014-04-07 03:40:39.841386	2014-04-07 03:40:39.841386
+206	8	3	Phoenix	t	2014-04-07 03:40:44.061476	2014-04-07 03:40:44.061476
+207	8	4	Little Rock	t	2014-04-07 03:40:53.964968	2014-04-07 03:40:53.964968
+208	8	5	Sacramento	t	2014-04-07 03:40:59.456085	2014-04-07 03:40:59.456085
+209	8	6	Denver	t	2014-04-07 03:41:02.61193	2014-04-07 03:41:02.61193
+210	8	7	Hartford	t	2014-04-07 03:41:06.098506	2014-04-07 03:41:06.098506
+211	8	8	Dover	t	2014-04-07 03:41:09.657677	2014-04-07 03:41:09.657677
+212	8	9	Tallahassee	t	2014-04-07 03:41:14.266854	2014-04-07 03:41:14.266854
+213	8	10	Atlanta	t	2014-04-07 03:41:24.36602	2014-04-07 03:41:24.36602
+214	8	11	Honolulu	t	2014-04-07 03:41:28.727693	2014-04-07 03:41:28.727693
+215	8	12	Boise	t	2014-04-07 03:41:32.876497	2014-04-07 03:41:32.876497
+216	8	13	Springfield	t	2014-04-07 03:41:36.698237	2014-04-07 03:41:36.698237
+217	8	14	Indianapolis	t	2014-04-07 03:41:42.520896	2014-04-07 03:41:42.520896
+218	8	15	Des Moines	t	2014-04-07 03:41:48.298981	2014-04-07 03:41:48.298981
+219	8	16	Topeka	t	2014-04-07 03:41:51.531427	2014-04-07 03:41:51.531427
+220	8	17	Frankfort	t	2014-04-07 03:41:57.426926	2014-04-07 03:41:57.426926
+221	8	18	Baton Rouge	t	2014-04-07 03:42:02.548682	2014-04-07 03:42:02.548682
+222	8	19	Augusta	t	2014-04-07 03:42:06.75607	2014-04-07 03:42:06.75607
+223	8	20	Annapolis	t	2014-04-07 03:42:16.304843	2014-04-07 03:42:16.304843
+224	8	21	Boston	t	2014-04-07 03:42:19.71042	2014-04-07 03:42:19.71042
+225	8	22	Lansing	t	2014-04-07 03:42:22.877138	2014-04-07 03:42:22.877138
+226	8	23	Saint Paul	t	2014-04-07 03:42:27.361398	2014-04-07 03:42:27.361398
+227	8	24	Jackson	t	2014-04-07 03:42:32.098253	2014-04-07 03:42:32.098253
+228	8	25	Jefferson City	t	2014-04-07 03:42:39.77843	2014-04-07 03:42:39.77843
+229	8	26	Helena	t	2014-04-07 03:42:44.883886	2014-04-07 03:42:44.883886
+230	8	27	Lincoln	t	2014-04-07 03:42:49.196602	2014-04-07 03:42:49.196602
+231	8	28	Carson City	t	2014-04-07 03:42:53.532884	2014-04-07 03:42:53.532884
+232	8	29	Concord	t	2014-04-07 03:42:57.17471	2014-04-07 03:42:57.17471
+233	8	30	Trenton	t	2014-04-07 03:43:02.129436	2014-04-07 03:43:02.129436
+234	8	31	Santa Fe	t	2014-04-07 03:43:06.7861	2014-04-07 03:43:06.7861
+235	8	32	Albany	t	2014-04-07 03:43:13.305793	2014-04-07 03:43:13.305793
+236	8	33	Raleigh	t	2014-04-07 03:43:19.103909	2014-04-07 03:43:19.103909
+237	8	34	Bismarck	t	2014-04-07 03:43:22.515494	2014-04-07 03:43:22.515494
+238	8	35	Columbus	t	2014-04-07 03:43:25.70306	2014-04-07 03:43:25.70306
+239	8	36	Oklahoma City	t	2014-04-07 03:43:30.749189	2014-04-07 03:43:30.749189
+240	8	37	Salem	t	2014-04-07 03:43:33.750734	2014-04-07 03:43:33.750734
+241	8	38	Harrisburg	t	2014-04-07 03:43:37.456518	2014-04-07 03:43:37.456518
+242	8	39	Providence	t	2014-04-07 03:43:41.479871	2014-04-07 03:43:41.479871
+243	8	40	Columbia	t	2014-04-07 03:43:47.909419	2014-04-07 03:43:47.909419
+244	8	41	dad	f	2014-04-07 03:43:58.186028	2014-04-07 03:43:58.186028
+245	8	42	adf	f	2014-04-07 03:44:00.134178	2014-04-07 03:44:00.134178
+246	8	43	adfad	f	2014-04-07 03:44:01.787285	2014-04-07 03:44:01.787285
+247	8	44	adfsd	f	2014-04-07 03:44:03.562523	2014-04-07 03:44:03.562523
+248	8	45	adfasd	f	2014-04-07 03:44:05.529261	2014-04-07 03:44:05.529261
+249	8	46	adfasd	f	2014-04-07 03:44:07.289991	2014-04-07 03:44:07.289991
+250	8	47	adas	f	2014-04-07 03:44:09.057517	2014-04-07 03:44:09.057517
+251	8	48	ads	f	2014-04-07 03:44:10.8206	2014-04-07 03:44:10.8206
+252	8	49	asdf	f	2014-04-07 03:44:12.56188	2014-04-07 03:44:12.56188
+253	8	50	ads	f	2014-04-07 03:44:14.903415	2014-04-07 03:44:14.903415
+254	9	1	Montgomery	t	2014-04-07 03:45:33.6978	2014-04-07 03:45:33.6978
+255	9	2	Anchorag	f	2014-04-07 03:45:37.09268	2014-04-07 03:45:37.09268
+256	9	3	Phoenix	t	2014-04-07 03:45:40.532185	2014-04-07 03:45:40.532185
+257	9	4	Little Rock	t	2014-04-07 03:45:48.473324	2014-04-07 03:45:48.473324
+258	9	5	Sacramento	t	2014-04-07 03:45:53.133577	2014-04-07 03:45:53.133577
+259	9	6	Denver	t	2014-04-07 03:45:56.992192	2014-04-07 03:45:56.992192
+260	9	7	Hartford	t	2014-04-07 03:46:00.585159	2014-04-07 03:46:00.585159
+261	9	8	Dover	t	2014-04-07 03:46:03.816894	2014-04-07 03:46:03.816894
+262	9	9	Tallahassee	t	2014-04-07 03:46:09.009442	2014-04-07 03:46:09.009442
+263	9	10	Atlanta	t	2014-04-07 03:46:12.695065	2014-04-07 03:46:12.695065
+264	9	11	Honolulu	t	2014-04-07 03:46:16.618384	2014-04-07 03:46:16.618384
+265	9	12	Boise	t	2014-04-07 03:46:20.273838	2014-04-07 03:46:20.273838
+266	9	13	Springfield	t	2014-04-07 03:46:24.816913	2014-04-07 03:46:24.816913
+267	9	14	Indianapolis	t	2014-04-07 03:46:28.837277	2014-04-07 03:46:28.837277
+268	9	15	Des Moines	t	2014-04-07 03:46:32.376243	2014-04-07 03:46:32.376243
+269	9	16	Topeka	t	2014-04-07 03:46:35.720791	2014-04-07 03:46:35.720791
+270	9	17	Frankfort	t	2014-04-07 03:46:39.051775	2014-04-07 03:46:39.051775
+271	9	18	Baton Rouge	t	2014-04-07 03:46:47.4299	2014-04-07 03:46:47.4299
+272	9	19	Augusta	t	2014-04-07 03:46:59.472587	2014-04-07 03:46:59.472587
+273	9	20	Annapolis	t	2014-04-07 03:47:02.882284	2014-04-07 03:47:02.882284
+274	9	21	Boston	t	2014-04-07 03:47:06.937615	2014-04-07 03:47:06.937615
+275	9	22	Lansing	t	2014-04-07 03:47:09.713964	2014-04-07 03:47:09.713964
+276	9	23	adf	f	2014-04-07 03:47:12.666509	2014-04-07 03:47:12.666509
+277	9	24	sdaf	f	2014-04-07 03:47:15.503515	2014-04-07 03:47:15.503515
+278	9	25	adsf	f	2014-04-07 03:47:17.466527	2014-04-07 03:47:17.466527
+279	9	26	asdf	f	2014-04-07 03:47:19.835388	2014-04-07 03:47:19.835388
+280	9	27	ergrs	f	2014-04-07 03:47:22.327604	2014-04-07 03:47:22.327604
+281	9	28	cvbcv	f	2014-04-07 03:47:24.937686	2014-04-07 03:47:24.937686
+282	9	29	cvbcv	f	2014-04-07 03:47:26.66612	2014-04-07 03:47:26.66612
+283	9	30	cvbc	f	2014-04-07 03:47:28.292761	2014-04-07 03:47:28.292761
+284	9	31	cvb	f	2014-04-07 03:47:30.333659	2014-04-07 03:47:30.333659
+285	9	32	cvbcv	f	2014-04-07 03:47:32.019945	2014-04-07 03:47:32.019945
+286	9	33	cbcbv	f	2014-04-07 03:47:33.884209	2014-04-07 03:47:33.884209
+287	9	34	cvbcv	f	2014-04-07 03:47:35.775657	2014-04-07 03:47:35.775657
+288	9	35	cvbcv	f	2014-04-07 03:47:37.61144	2014-04-07 03:47:37.61144
+289	9	36	cvbc	f	2014-04-07 03:47:40.074521	2014-04-07 03:47:40.074521
+290	9	37	cvbcv	f	2014-04-07 03:47:41.854437	2014-04-07 03:47:41.854437
+291	9	38	cvbc	f	2014-04-07 03:47:43.981043	2014-04-07 03:47:43.981043
+292	9	39	cvbcv	f	2014-04-07 03:47:45.750841	2014-04-07 03:47:45.750841
+293	9	40	cvbcv	f	2014-04-07 03:47:47.614212	2014-04-07 03:47:47.614212
+294	9	41	cvbc	f	2014-04-07 03:47:49.62807	2014-04-07 03:47:49.62807
+295	9	42	cvcvb	f	2014-04-07 03:47:51.739248	2014-04-07 03:47:51.739248
+296	9	43	Austin	t	2014-04-07 03:47:54.328698	2014-04-07 03:47:54.328698
+297	9	44	Salt Lake City	t	2014-04-07 03:47:59.320193	2014-04-07 03:47:59.320193
+298	9	45	Montpelier	t	2014-04-07 03:48:10.677638	2014-04-07 03:48:10.677638
+299	9	46	Richmond	t	2014-04-07 03:48:15.974921	2014-04-07 03:48:15.974921
+300	9	47	Olympia	t	2014-04-07 03:48:21.04327	2014-04-07 03:48:21.04327
+301	9	48	Charleston	t	2014-04-07 03:48:24.884523	2014-04-07 03:48:24.884523
+302	9	49	Madison	t	2014-04-07 03:48:28.252919	2014-04-07 03:48:28.252919
+303	9	50	Cheyenne	t	2014-04-07 03:48:31.43394	2014-04-07 03:48:31.43394
+304	11	1	Montgomery	t	2014-04-07 04:05:50.154639	2014-04-07 04:05:50.154639
+305	11	2	Juneau	t	2014-04-07 04:05:54.794411	2014-04-07 04:05:54.794411
+306	11	3	Phoenix	t	2014-04-07 04:05:57.779858	2014-04-07 04:05:57.779858
+307	11	4	Little Rock	t	2014-04-07 04:06:02.003725	2014-04-07 04:06:02.003725
+308	11	5	Sacramento	t	2014-04-07 04:06:05.545373	2014-04-07 04:06:05.545373
+309	11	6	Denver	t	2014-04-07 04:06:08.352604	2014-04-07 04:06:08.352604
+310	11	7	Hartford	t	2014-04-07 04:06:11.503958	2014-04-07 04:06:11.503958
+311	11	8	Dover	t	2014-04-07 04:06:14.073479	2014-04-07 04:06:14.073479
+312	11	9	Tallahassee	t	2014-04-07 04:06:17.603081	2014-04-07 04:06:17.603081
+313	11	10	Atlanta	t	2014-04-07 04:06:20.546617	2014-04-07 04:06:20.546617
+314	11	11	Honolulu	t	2014-04-07 04:06:23.666278	2014-04-07 04:06:23.666278
+315	11	12	Boise	t	2014-04-07 04:06:26.580001	2014-04-07 04:06:26.580001
+316	11	13	Springfield	t	2014-04-07 04:06:38.416457	2014-04-07 04:06:38.416457
+317	11	14	Indianapolis	t	2014-04-07 04:06:42.82299	2014-04-07 04:06:42.82299
+318	11	15	Des Moines	t	2014-04-07 04:06:53.714475	2014-04-07 04:06:53.714475
+319	11	16	Topeka	t	2014-04-07 04:06:56.88873	2014-04-07 04:06:56.88873
+320	11	17	Frankfort	t	2014-04-07 04:07:00.638173	2014-04-07 04:07:00.638173
+321	11	18	Baton	f	2014-04-07 04:07:03.766039	2014-04-07 04:07:03.766039
+322	11	19	Augusta	t	2014-04-07 04:07:07.594906	2014-04-07 04:07:07.594906
+323	11	20	Annapolis	t	2014-04-07 04:07:11.075024	2014-04-07 04:07:11.075024
+324	11	21	Boston	t	2014-04-07 04:07:18.61789	2014-04-07 04:07:18.61789
+325	11	22	Lansing	t	2014-04-07 04:07:21.314184	2014-04-07 04:07:21.314184
+326	11	23	Saint Paul	t	2014-04-07 04:07:25.281376	2014-04-07 04:07:25.281376
+327	11	24	Jackson	t	2014-04-07 04:07:28.341275	2014-04-07 04:07:28.341275
+328	11	25	Jefferson City	t	2014-04-07 04:07:33.104904	2014-04-07 04:07:33.104904
+329	11	26	Billings	f	2014-04-07 04:07:36.895331	2014-04-07 04:07:36.895331
+330	11	27	Lincoln	t	2014-04-07 04:07:42.444624	2014-04-07 04:07:42.444624
+331	11	28	Carson City	t	2014-04-07 04:07:46.010595	2014-04-07 04:07:46.010595
+332	11	29	Concord	t	2014-04-07 04:07:50.021999	2014-04-07 04:07:50.021999
+333	11	30	Trenton	t	2014-04-07 04:07:54.155314	2014-04-07 04:07:54.155314
+334	11	31	Santa Fe	t	2014-04-07 04:08:01.056846	2014-04-07 04:08:01.056846
+335	11	32	Albany	t	2014-04-07 04:08:04.655863	2014-04-07 04:08:04.655863
+336	11	33	Raleigh	t	2014-04-07 04:08:08.545284	2014-04-07 04:08:08.545284
+337	11	34	Bismarck	t	2014-04-07 04:08:12.302545	2014-04-07 04:08:12.302545
+338	11	35	Columbus	t	2014-04-07 04:08:16.172905	2014-04-07 04:08:16.172905
+339	11	36	Oklahoma City	t	2014-04-07 04:08:19.451559	2014-04-07 04:08:19.451559
+340	11	37	Salem	t	2014-04-07 04:08:22.991437	2014-04-07 04:08:22.991437
+341	11	38	Harrisburg	t	2014-04-07 04:08:30.376147	2014-04-07 04:08:30.376147
+342	11	39	Providence	t	2014-04-07 04:08:34.076079	2014-04-07 04:08:34.076079
+343	11	40	Columbia	t	2014-04-07 04:08:38.230402	2014-04-07 04:08:38.230402
+344	11	41	Pierre	t	2014-04-07 04:08:40.977497	2014-04-07 04:08:40.977497
+345	11	42	Nashville	t	2014-04-07 04:08:43.861511	2014-04-07 04:08:43.861511
+346	11	43	adsf	f	2014-04-07 04:08:50.924909	2014-04-07 04:08:50.924909
+347	11	44	dfg	f	2014-04-07 04:08:53.652113	2014-04-07 04:08:53.652113
+348	11	45	dg	f	2014-04-07 04:08:55.317175	2014-04-07 04:08:55.317175
+349	11	46	egs	f	2014-04-07 04:08:57.28679	2014-04-07 04:08:57.28679
+350	11	47	sdfgd	f	2014-04-07 04:08:59.450127	2014-04-07 04:08:59.450127
+351	11	48	eges	f	2014-04-07 04:09:01.030428	2014-04-07 04:09:01.030428
+352	11	49	sdge	f	2014-04-07 04:09:02.673582	2014-04-07 04:09:02.673582
+353	11	50	sge	f	2014-04-07 04:09:04.494212	2014-04-07 04:09:04.494212
+\.
+
+
+--
+-- Name: guesses_id_seq; Type: SEQUENCE SET; Schema: public; Owner: apprentice
+--
+
+SELECT pg_catalog.setval('guesses_id_seq', 353, true);
+
+
+--
+-- Data for Name: rounds; Type: TABLE DATA; Schema: public; Owner: apprentice
+--
+
+COPY rounds (id, user_id, deck_id, cards_played, cards_correct, created_at, updated_at) FROM stdin;
+5	2	1	51	46	2014-04-07 02:51:04.731273	2014-04-07 02:56:01.376616
+6	2	1	1	0	2014-04-07 03:13:23.385643	2014-04-07 03:13:23.417625
+3	1	1	4	1	2014-04-06 22:18:05.089676	2014-04-06 22:18:28.327891
+4	1	1	1	0	2014-04-06 23:45:29.10208	2014-04-06 23:45:29.165109
+11	3	1	51	40	2014-04-07 04:04:46.271656	2014-04-07 04:09:04.497897
+1	1	1	51	45	\N	\N
+2	1	1	51	40	\N	\N
+9	4	1	51	29	2014-04-07 03:45:24.677642	2014-04-07 03:48:31.438706
+10	1	1	1	0	2014-04-07 04:03:12.98283	2014-04-07 04:03:13.012796
+7	2	1	51	39	2014-04-07 03:30:19.780297	2014-04-07 03:34:10.779905
+8	3	1	51	39	2014-04-07 03:40:23.581498	2014-04-07 03:44:14.907669
+\.
+
+
+--
+-- Name: rounds_id_seq; Type: SEQUENCE SET; Schema: public; Owner: apprentice
+--
+
+SELECT pg_catalog.setval('rounds_id_seq', 11, true);
+
+
+--
+-- Data for Name: schema_migrations; Type: TABLE DATA; Schema: public; Owner: apprentice
+--
+
+COPY schema_migrations (version) FROM stdin;
+20140404144731
+20140404144743
+20140404144800
+20140404144813
+20140404144848
+20140405143536
+20140406151204
+\.
+
+
+--
+-- Data for Name: users; Type: TABLE DATA; Schema: public; Owner: apprentice
+--
+
+COPY users (id, user_name, user_email, password_digest, total_cards_played, total_cards_correct) FROM stdin;
+1	Jay	j@dbc.com	$2a$10$m.L0yMC664UQstL3KoYhdu/ixuNtqLqGp95v5hDr0n3Am7cif5ZSW	\N	\N
+2	Kay	k@dbc.com	$2a$10$0b6l2LLKxD380BvZi2pAWOK0lUdbuE/W.v9RlBxymG4UhMKqzG2Pa	\N	\N
+3	Jim 	jim@dbc.com	$2a$10$ohb50KMu4xd2Cc/iI1wPrOBtQ38SQRkLc3DeWCP4RsBxlmTRUE31y	\N	\N
+4	lou	lou@dbc.com	$2a$10$jHCzVyosx1Gp3rGd4Hk2au7X7gHYsy6dc8aH22facwYa/nYyNEfVO	\N	\N
+\.
+
+
+--
+-- Name: users_id_seq; Type: SEQUENCE SET; Schema: public; Owner: apprentice
+--
+
+SELECT pg_catalog.setval('users_id_seq', 4, true);
+
+
+--
+-- Name: cards_pkey; Type: CONSTRAINT; Schema: public; Owner: apprentice; Tablespace: 
+--
+
+ALTER TABLE ONLY cards
+    ADD CONSTRAINT cards_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: decks_pkey; Type: CONSTRAINT; Schema: public; Owner: apprentice; Tablespace: 
+--
+
+ALTER TABLE ONLY decks
+    ADD CONSTRAINT decks_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: guesses_pkey; Type: CONSTRAINT; Schema: public; Owner: apprentice; Tablespace: 
+--
+
+ALTER TABLE ONLY guesses
+    ADD CONSTRAINT guesses_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: rounds_pkey; Type: CONSTRAINT; Schema: public; Owner: apprentice; Tablespace: 
+--
+
+ALTER TABLE ONLY rounds
+    ADD CONSTRAINT rounds_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: users_pkey; Type: CONSTRAINT; Schema: public; Owner: apprentice; Tablespace: 
+--
+
+ALTER TABLE ONLY users
+    ADD CONSTRAINT users_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: unique_schema_migrations; Type: INDEX; Schema: public; Owner: apprentice; Tablespace: 
+--
+
+CREATE UNIQUE INDEX unique_schema_migrations ON schema_migrations USING btree (version);
+
+
+--
+-- Name: public; Type: ACL; Schema: -; Owner: apprentice
+--
+
+REVOKE ALL ON SCHEMA public FROM PUBLIC;
+REVOKE ALL ON SCHEMA public FROM apprentice;
+GRANT ALL ON SCHEMA public TO apprentice;
+GRANT ALL ON SCHEMA public TO PUBLIC;
+
+
+--
+-- PostgreSQL database dump complete
+--
+
