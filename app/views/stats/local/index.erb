@@ -1,10 +1,6 @@
 <div class="container">
   <div class="row top">
 
-    <div class="chart">
-
-    </div>
-
     <div class="col-md-8">
       <h2><%= @user.user_name %>'s Statistics Dashboard
         <small>Personal Game Stats</small></h2>
@@ -12,6 +8,14 @@
 
     <div class="col-md-4">
       <h2></h2>
+    </div>
+  </div>
+
+  <div class="row">
+    <h3>Last 5 Games - Correct Answers</h3>
+    <script id="csv" type="text/csv"><%= last_five_player_rounds(local_rounds_collection(@user.rounds)) %></script>
+    <div class="chart">
+
     </div>
   </div>
 
@@ -31,13 +35,14 @@
       <tbody class="table-striped table-hover">
         <% local_rounds_collection(@user.rounds).each do |round| %> 
         <tr>
-          <td><%= round[0] %></td>
-          <td><%= round[1] %></td>
-          <td><%= round[2] %></td>
-          <td><%= round[3] %></td>
-          <td><%= round[4] %></td>
-          <td><%= round[5] %></td>
+          <td><%= round[:date] %></td>
+          <td><%= round[:game] %></td>
+          <td><%= round[:round] %></td>
+          <td><%= round[:correct] %></td>
+          <td><%= round[:wrong] %></td>
+          <td><%= round[:total] %></td>
         </tr>
+
         <% end %>
       </tbody>
 
